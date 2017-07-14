@@ -1,0 +1,13 @@
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\bin\Debug\nTierApplicationExample.exe.config
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.Form1.resources
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.Properties.Resources.resources
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.csproj.GenerateResource.Cache
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\bin\Debug\nTierApplicationExample.exe
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\bin\Debug\nTierApplicationExample.pdb
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.exe
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.pdb
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.SehirControl.resources
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.UserControls.KisiControl.resources
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.UserControls.IlceControl.resources
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.csprojResolveAssemblyReference.cache
+C:\Users\emre9\Documents\Visual Studio 2012\Projects\nTierApplicationExample\nTierApplicationExample\obj\Debug\nTierApplicationExample.csproj.ResolveComReference.cache
