@@ -90,12 +90,6 @@ namespace nTierApplicationExample
             }
         }
 
-        //Delete
-        private void button4_Click (object sender, EventArgs e)
-        {
-            
-        }
-
         private void Form1_Load (object sender, EventArgs e)
         {
             cbSelect.Items.Add("Sehir");
@@ -107,11 +101,9 @@ namespace nTierApplicationExample
             foreach (Control c in this.Controls)
                 if (c is UserControl) c.Visible = false;
             cbSelect.SelectedIndex = 0;
-
-
         }
 
-        //Combobox seçimi ve tablonun gösterilmesi
+        //Combobox selection and filling the DataGridView
         private void comboBox1_SelectedValueChanged (object sender, EventArgs e)
         {
             foreach (Control u in this.Controls) {
@@ -121,21 +113,15 @@ namespace nTierApplicationExample
                     u.BringToFront();
                 } else if (u is UserControl) u.Visible = false;
             }
-            
-            Get(cbSelect.SelectedItem.ToString());
-        }
-
-        private void Get (string type)
-        {
             try {
                 BLL bll = new BLL();
-                dataGridView.DataSource = bll.Get(type);
+                dataGridView.DataSource = bll.Get(cbSelect.SelectedItem.ToString());
             } catch {
                 MessageBox.Show("An error occured.");
             }
         }
 
-        //Excel'e datagridview'den veri göndermek için!
+        //To export Data to Excel file.
         private void button5_Click (object sender, EventArgs e)
         {
             Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
@@ -146,12 +132,23 @@ namespace nTierApplicationExample
             for (int i = 0; i < dataGridView.Rows.Count; i++) {
                 for (int j = 0; j < dataGridView.Columns.Count; j++) {
                     xlWorksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
-                    xlWorksheet.Cells[3, 4] = null;
                 }
             }
         }
 
-        private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+        #region Deletion
+        //DELETE achieved by right click on row header.
+        private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                ContextMenu menu = new ContextMenu();
+                MenuItem deleteMenuItem = new MenuItem("Delete");
+                deleteMenuItem.Click += DeleteMenuItem_Click;
+                menu.MenuItems.Add(deleteMenuItem);
+                menu.Show(dataGridView, new Point(e.X, e.Y));
+            }
+        }
+
+        private void DeleteMenuItem_Click(object sender, EventArgs e) {
             try {
                 Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
                 Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
@@ -163,13 +160,6 @@ namespace nTierApplicationExample
                 MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                ContextMenu menu = new ContextMenu();
-                menu.MenuItems.Add(new MenuItem("Delete"));
-                menu.Show(dataGridView, new Point(e.X, e.Y));
-            }
-        }
+        #endregion
     }
 }

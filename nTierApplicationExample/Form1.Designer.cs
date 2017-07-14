@@ -33,7 +33,6 @@
             this.getButton = new System.Windows.Forms.Button();
             this.insertButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
-            this.deleteButton = new System.Windows.Forms.Button();
             this.cbSelect = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -52,7 +51,6 @@
             this.dataGridView.Size = new System.Drawing.Size(360, 235);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_RowHeaderMouseClick);
-            this.dataGridView.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseDoubleClick);
             // 
             // getButton
             // 
@@ -84,16 +82,6 @@
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Click += new System.EventHandler(this.button3_Click);
             // 
-            // deleteButton
-            // 
-            this.deleteButton.Location = new System.Drawing.Point(263, 19);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(78, 32);
-            this.deleteButton.TabIndex = 6;
-            this.deleteButton.Text = "DELETE";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.button4_Click);
-            // 
             // cbSelect
             // 
             this.cbSelect.FormattingEnabled = true;
@@ -118,7 +106,6 @@
             this.groupBox1.Controls.Add(this.getButton);
             this.groupBox1.Controls.Add(this.insertButton);
             this.groupBox1.Controls.Add(this.updateButton);
-            this.groupBox1.Controls.Add(this.deleteButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 280);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(347, 58);
@@ -136,7 +123,7 @@
             // deleteRowToolStripMenuItem
             // 
             this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
-            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.deleteRowToolStripMenuItem.Text = "DeleteRow";
             // 
             // Form1
@@ -163,7 +150,6 @@
         private System.Windows.Forms.Button getButton;
         private System.Windows.Forms.Button insertButton;
         private System.Windows.Forms.Button updateButton;
-        private System.Windows.Forms.Button deleteButton;
         public System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ComboBox cbSelect;
         private System.Windows.Forms.Button exportButton;
