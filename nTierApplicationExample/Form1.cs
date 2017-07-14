@@ -93,6 +93,11 @@ namespace nTierApplicationExample
         //Delete
         private void button4_Click (object sender, EventArgs e)
         {
+            int deleteId = 0;
+            if (comboBox1.SelectedItem.ToString() == "Sehir") {
+                deleteId = Convert.ToInt16(sehirControl.id);
+            }
+            int[] deleteIndexes;
             try
             {
                 Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
@@ -215,6 +220,21 @@ namespace nTierApplicationExample
             }
             //dynamic allDataRange = xlWorksheet.UsedRange;
             //allDataRange.Sort(allDataRange.Columns[1], Excel.XlSortOrder.xlAscending);
+        }
+
+        private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+
+            Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+            Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
+            Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++) {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++) {
+                    xlWorksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value;
+                }
+            }
         }
     }
 }
