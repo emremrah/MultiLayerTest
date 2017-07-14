@@ -37,7 +37,7 @@ namespace nTierApplicationExample
         private void button1_Click (object sender, EventArgs e)
         {
             BLL bll = new BLL();
-            dataGridView1.DataSource = bll.Get(comboBox1.SelectedItem.ToString());
+            dataGridView.DataSource = bll.Get(cbSelect.SelectedItem.ToString());
         }
 
         //Insert
@@ -45,18 +45,18 @@ namespace nTierApplicationExample
         {
             try {
                 BLL BLL = new BLL();    //BLL Business Logic Layer
-                if (comboBox1.SelectedItem.ToString() == "Sehir") {
+                if (cbSelect.SelectedItem.ToString() == "Sehir") {
                     Sehir newSehir = new Sehir(Convert.ToInt16(sehirControl.id.Text), sehirControl.ad.Text);
                     BLL.Insert<Sehir>(newSehir);
-                    dataGridView1.DataSource = BLL.Get("Sehir");
-                } else if (comboBox1.SelectedItem.ToString() == "Kisi") {
+                    dataGridView.DataSource = BLL.Get("Sehir");
+                } else if (cbSelect.SelectedItem.ToString() == "Kisi") {
                     Kisi newKisi = new Kisi(Convert.ToInt16(kisiControl.id.Text), kisiControl.ad.Text, kisiControl.soyad.Text, Convert.ToInt16(kisiControl.yas.Text), kisiControl.adres.Text, kisiControl.sehir.Text, kisiControl.ilce.Text);
                     BLL.Insert<Kisi>(newKisi);
-                    dataGridView1.DataSource = BLL.Get("Kisi");
-                } else if (comboBox1.SelectedItem.ToString() == "Ilce") {
+                    dataGridView.DataSource = BLL.Get("Kisi");
+                } else if (cbSelect.SelectedItem.ToString() == "Ilce") {
                     Ilce newIlce = new Ilce(Convert.ToInt16(ilceControl.id.Text), ilceControl.ad.Text, Convert.ToInt16(ilceControl.sehirId.Text));
                     BLL.Insert<Ilce>(newIlce);
-                    dataGridView1.DataSource = BLL.Get("Ilce");
+                    dataGridView.DataSource = BLL.Get("Ilce");
                 }
             } catch {
                 MessageBox.Show("An error occured during insert");
@@ -67,23 +67,23 @@ namespace nTierApplicationExample
         private void button3_Click (object sender, EventArgs e)
         {
             try {
-                if (comboBox1.SelectedIndex == 0) {
+                if (cbSelect.SelectedIndex == 0) {
                     BLL bll = new BLL();
                     Sehir newSehir = new Sehir(Convert.ToInt16(sehirControl.id.Text), sehirControl.ad.Text);
 
                     bll.Update<Sehir>(newSehir);
-                    dataGridView1.DataSource = bll.Get("Sehir");
-                } else if (comboBox1.SelectedItem.ToString() == "Kisi") {
+                    dataGridView.DataSource = bll.Get("Sehir");
+                } else if (cbSelect.SelectedItem.ToString() == "Kisi") {
                     BLL bll = new BLL();
                     Kisi newKisi = new Kisi(Convert.ToInt16(kisiControl.id.Text), kisiControl.ad.Text, kisiControl.soyad.Text, Convert.ToInt16(kisiControl.yas.Text), kisiControl.adres.Text, kisiControl.sehir.Text, kisiControl.ilce.Text);
 
                     bll.Update<Kisi>(newKisi);
-                    dataGridView1.DataSource = bll.Get("Kisi");
-                } else if (comboBox1.SelectedItem.ToString() == "Ilce") {
+                    dataGridView.DataSource = bll.Get("Kisi");
+                } else if (cbSelect.SelectedItem.ToString() == "Ilce") {
                     BLL bll = new BLL();
                     Ilce newIlce = new Ilce(Convert.ToInt16(ilceControl.id.Text), ilceControl.ad.Text, Convert.ToInt16(ilceControl.sehirId.Text));
                     bll.Update<Ilce>(newIlce);
-                    dataGridView1.DataSource = bll.Get("Ilce");
+                    dataGridView.DataSource = bll.Get("Ilce");
                 }
             } catch {
                 MessageBox.Show("Error occured during update.");
@@ -93,112 +93,41 @@ namespace nTierApplicationExample
         //Delete
         private void button4_Click (object sender, EventArgs e)
         {
-            int deleteId = 0;
-            if (comboBox1.SelectedItem.ToString() == "Sehir") {
-                deleteId = Convert.ToInt16(sehirControl.id);
-            }
-            int[] deleteIndexes;
-            try
-            {
-                Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
-                Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
-                Excel.Range xlRange = xlWorksheet.UsedRange;
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++) {
-                    if (xlWorksheet.Cells[i+1, 1] = 1) {
-                        for (int k = 0; k < dataGridView1.Columns.Count; k++) {
-                            xlWorksheet.Cells[i + 1, k] = null;
-                        }
-                    }
-                    //for (int j = 0; j < dataGridView1.Columns.Count; j++) {
-                    //    xlWorksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value;
-                    //    xlWorksheet.Cells[3, 4] = null;
-                    //}
-                }
-            }
-            catch
-            {
-                MessageBox.Show("An error occured during deletion");   
-            }
+            
         }
 
         private void Form1_Load (object sender, EventArgs e)
         {
-            comboBox1.Items.Add("Sehir");
-            comboBox1.Items.Add("Kisi");
-            comboBox1.Items.Add("Ilce");
+            cbSelect.Items.Add("Sehir");
+            cbSelect.Items.Add("Kisi");
+            cbSelect.Items.Add("Ilce");
             this.Controls.Add(sehirControl);
             this.Controls.Add(kisiControl);
             this.Controls.Add(ilceControl);
             foreach (Control c in this.Controls)
                 if (c is UserControl) c.Visible = false;
+            cbSelect.SelectedIndex = 0;
         }
 
         //Combobox seçimi ve tablonun gösterilmesi
         private void comboBox1_SelectedValueChanged (object sender, EventArgs e)
         {
             foreach (Control u in this.Controls) {
-                if (u.Name == comboBox1.SelectedItem + "Control") {
+                if (u.Name == cbSelect.SelectedItem + "Control") {
                     u.Visible = true;
                     u.Location = new Point(400, 0);
                     u.BringToFront();
                 } else if (u is UserControl) u.Visible = false;
             }
             
-            Get(comboBox1.SelectedItem.ToString());
-            //if (comboBox1.SelectedIndex==0)
-            //{
-            //    this.Controls.Add(sehirControl);
-            //    sehirControl.Location = new Point(400, 0);
-            //    sehirControl.BringToFront();
-            //    sehirControl.Visible = true;
-            //    ilceControl.Visible = false;
-            //    kisiControl.Visible = false;
-            //    Get();
-            //}
-            //else if (comboBox1.SelectedIndex == 1)
-            //{
-            //    this.Controls.Add(kisiControl);
-            //    kisiControl.Location = new Point(400, 0);
-            //    kisiControl.BringToFront();
-            //    sehirControl.Visible = false;
-            //    ilceControl.Visible = false;
-            //    kisiControl.Visible = true;
-            //    Get();
-            //}
-            //else if (comboBox1.SelectedIndex == 2)
-            //{
-            //    this.Controls.Add(ilceControl);
-            //    ilceControl.Location = new Point(400, 0);
-            //    ilceControl.BringToFront();
-            //    kisiControl.Visible = false;
-            //    sehirControl.Visible = false;
-            //    ilceControl.Visible = true;
-            //    Get();
-            //}
+            Get(cbSelect.SelectedItem.ToString());
         }
 
         private void Get (string type)
         {
             try {
                 BLL bll = new BLL();
-
-                //BLL'deki GET fonksiyonu bir dataTable döndürüyor. DataTable da dataGridView için source
-                //olarak kullanılıyor.
-                //if (comboBox1.SelectedIndex == 0)
-                //{
-                //    dataGridView1.DataSource = bll.Get("Sehir");
-                //}
-                //else if (comboBox1.SelectedIndex == 1)
-                //{
-                //    dataGridView1.DataSource = bll.Get("Kisi");
-                //}
-                //else if (comboBox1.SelectedIndex == 2)
-                //{
-                //    dataGridView1.DataSource = bll.Get("Ilce");
-                //}
-                dataGridView1.DataSource = bll.Get(type);
+                dataGridView.DataSource = bll.Get(type);
             } catch {
                 MessageBox.Show("An error occured.");
             }
@@ -212,28 +141,30 @@ namespace nTierApplicationExample
             Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
             Excel.Range xlRange = xlWorksheet.UsedRange;
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++) {
-                for (int j = 0; j < dataGridView1.Columns.Count; j++) {
-                    xlWorksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value;
+            for (int i = 0; i < dataGridView.Rows.Count; i++) {
+                for (int j = 0; j < dataGridView.Columns.Count; j++) {
+                    xlWorksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
                     xlWorksheet.Cells[3, 4] = null;
                 }
             }
-            //dynamic allDataRange = xlWorksheet.UsedRange;
-            //allDataRange.Sort(allDataRange.Columns[1], Excel.XlSortOrder.xlAscending);
         }
 
         private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
-            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+            dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
 
-            Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-            Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
-            Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
-            Excel.Range xlRange = xlWorksheet.UsedRange;
-
-            for (int i = 0; i < dataGridView1.Rows.Count; i++) {
-                for (int j = 0; j < dataGridView1.Columns.Count; j++) {
-                    xlWorksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value;
-                }
+            try {
+                Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
+                Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
+                Excel.Range xlRange = xlWorksheet.UsedRange;
+                ((Excel.Range) xlWorksheet.Rows[dataGridView.CurrentCell.RowIndex + 2]).Delete(Type.Missing);
+                //for (int i = 0; i < dataGridView.Rows.Count; i++) {
+                //    for (int j = 0; j < dataGridView.Columns.Count; j++) {
+                //        xlWorksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
+                //    }
+                //}
+            } catch {
+                MessageBox.Show("Could not update the Excel file: Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
