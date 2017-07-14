@@ -107,6 +107,8 @@ namespace nTierApplicationExample
             foreach (Control c in this.Controls)
                 if (c is UserControl) c.Visible = false;
             cbSelect.SelectedIndex = 0;
+
+
         }
 
         //Combobox seçimi ve tablonun gösterilmesi
@@ -150,21 +152,23 @@ namespace nTierApplicationExample
         }
 
         private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
-            dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
-
             try {
                 Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
                 Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
                 Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
                 Excel.Range xlRange = xlWorksheet.UsedRange;
                 ((Excel.Range) xlWorksheet.Rows[dataGridView.CurrentCell.RowIndex + 2]).Delete(Type.Missing);
-                //for (int i = 0; i < dataGridView.Rows.Count; i++) {
-                //    for (int j = 0; j < dataGridView.Columns.Count; j++) {
-                //        xlWorksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
-                //    }
-                //}
+                dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
             } catch {
-                MessageBox.Show("Could not update the Excel file: Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                ContextMenu menu = new ContextMenu();
+                menu.MenuItems.Add(new MenuItem("Delete"));
+                menu.Show(dataGridView, new Point(e.X, e.Y));
             }
         }
     }

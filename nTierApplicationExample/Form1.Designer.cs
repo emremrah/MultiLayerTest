@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent ()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.getButton = new System.Windows.Forms.Button();
             this.insertButton = new System.Windows.Forms.Button();
@@ -35,7 +36,12 @@
             this.deleteButton = new System.Windows.Forms.Button();
             this.cbSelect = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -45,11 +51,12 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(360, 235);
             this.dataGridView.TabIndex = 0;
+            this.dataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_RowHeaderMouseClick);
             this.dataGridView.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseDoubleClick);
             // 
             // getButton
             // 
-            this.getButton.Location = new System.Drawing.Point(12, 291);
+            this.getButton.Location = new System.Drawing.Point(6, 19);
             this.getButton.Name = "getButton";
             this.getButton.Size = new System.Drawing.Size(77, 32);
             this.getButton.TabIndex = 1;
@@ -59,7 +66,7 @@
             // 
             // insertButton
             // 
-            this.insertButton.Location = new System.Drawing.Point(97, 291);
+            this.insertButton.Location = new System.Drawing.Point(91, 19);
             this.insertButton.Name = "insertButton";
             this.insertButton.Size = new System.Drawing.Size(78, 32);
             this.insertButton.TabIndex = 2;
@@ -69,7 +76,7 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(183, 291);
+            this.updateButton.Location = new System.Drawing.Point(177, 19);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(78, 32);
             this.updateButton.TabIndex = 5;
@@ -79,7 +86,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(269, 291);
+            this.deleteButton.Location = new System.Drawing.Point(263, 19);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(78, 32);
             this.deleteButton.TabIndex = 6;
@@ -106,22 +113,47 @@
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.button5_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.getButton);
+            this.groupBox1.Controls.Add(this.insertButton);
+            this.groupBox1.Controls.Add(this.updateButton);
+            this.groupBox1.Controls.Add(this.deleteButton);
+            this.groupBox1.Location = new System.Drawing.Point(12, 280);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(347, 58);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Operation";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteRowToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(131, 26);
+            // 
+            // deleteRowToolStripMenuItem
+            // 
+            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteRowToolStripMenuItem.Text = "DeleteRow";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 338);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.cbSelect);
-            this.Controls.Add(this.deleteButton);
-            this.Controls.Add(this.updateButton);
-            this.Controls.Add(this.insertButton);
-            this.Controls.Add(this.getButton);
             this.Controls.Add(this.dataGridView);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -135,5 +167,8 @@
         public System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ComboBox cbSelect;
         private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem deleteRowToolStripMenuItem;
     }
 }
