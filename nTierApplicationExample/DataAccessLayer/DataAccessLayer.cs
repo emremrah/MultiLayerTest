@@ -14,7 +14,7 @@ namespace nTierApplicationExample.DataAccessLayer
 {
     class DataAccessLayer
     {
-        public string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\calisma\kisi.xlsx; Extended Properties='Excel 12.0 xml;HDR=YES;'";
+        public string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=kisi.xlsx; Extended Properties='Excel 12.0 xml;HDR=YES;'";
         
         OleDbConnection connection = new OleDbConnection();
         DataTable dataTable = new DataTable();  //Bellekteki verilerin bir tablosunu temsil ediyor.
