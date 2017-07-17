@@ -140,6 +140,10 @@ namespace nTierApplicationExample
         //DELETE achieved by right click on row header.
         private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (e.Button == MouseButtons.Right) {
+                dataGridView.MultiSelect = false;
+                var hitTest = dataGridView.HitTest(e.X, e.Y);
+                dataGridView.ClearSelection();
+                dataGridView.Rows[hitTest.RowIndex].Selected = true;
                 ContextMenu menu = new ContextMenu();
                 MenuItem deleteMenuItem = new MenuItem("Delete");
                 deleteMenuItem.Click += DeleteMenuItem_Click;
@@ -148,16 +152,35 @@ namespace nTierApplicationExample
             }
         }
 
+        //DELETE in Excel file
         private void DeleteMenuItem_Click(object sender, EventArgs e) {
             try {
+                int deleteRow = dataGridView.SelectedRows[0].Index;
+                dataGridView.Rows.RemoveAt(deleteRow);
                 Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
                 Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
                 Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
                 Excel.Range xlRange = xlWorksheet.UsedRange;
-                ((Excel.Range) xlWorksheet.Rows[dataGridView.CurrentCell.RowIndex + 2]).Delete(Type.Missing);
-                dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
+                ((Excel.Range) xlWorksheet.Rows[deleteRow + 2]).Delete(Type.Missing);
             } catch {
                 MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+
+        //DELETE operation by right click on any point in grid.
+        private void dataGridView_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                dataGridView.MultiSelect = false;
+                var hitTest = dataGridView.HitTest(e.X, e.Y);
+                dataGridView.ClearSelection();
+                dataGridView.Rows[hitTest.RowIndex].Selected = true;
+                //dataGridView[hitTest.ColumnIndex, hitTest.RowIndex].Selected = true;
+                ContextMenu menu = new ContextMenu();
+                MenuItem deleteMenuItem = new MenuItem("Delete");
+                deleteMenuItem.Click += DeleteMenuItem_Click;
+                menu.MenuItems.Add(deleteMenuItem);
+                menu.Show(dataGridView, new Point(e.X, e.Y));
             }
         }
         #endregion
