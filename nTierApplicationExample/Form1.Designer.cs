@@ -56,9 +56,9 @@
             // 
             // getButton
             // 
-            this.getButton.Location = new System.Drawing.Point(6, 19);
+            this.getButton.Location = new System.Drawing.Point(6, 64);
             this.getButton.Name = "getButton";
-            this.getButton.Size = new System.Drawing.Size(77, 32);
+            this.getButton.Size = new System.Drawing.Size(84, 36);
             this.getButton.TabIndex = 1;
             this.getButton.Text = "GET";
             this.getButton.UseVisualStyleBackColor = true;
@@ -66,9 +66,9 @@
             // 
             // insertButton
             // 
-            this.insertButton.Location = new System.Drawing.Point(91, 19);
+            this.insertButton.Location = new System.Drawing.Point(91, 64);
             this.insertButton.Name = "insertButton";
-            this.insertButton.Size = new System.Drawing.Size(78, 32);
+            this.insertButton.Size = new System.Drawing.Size(85, 36);
             this.insertButton.TabIndex = 2;
             this.insertButton.Text = "INSERT";
             this.insertButton.UseVisualStyleBackColor = true;
@@ -76,9 +76,9 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(177, 19);
+            this.updateButton.Location = new System.Drawing.Point(177, 64);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(78, 32);
+            this.updateButton.Size = new System.Drawing.Size(85, 36);
             this.updateButton.TabIndex = 5;
             this.updateButton.Text = "UPDATE";
             this.updateButton.UseVisualStyleBackColor = true;
@@ -87,7 +87,11 @@
             // cbSelect
             // 
             this.cbSelect.FormattingEnabled = true;
-            this.cbSelect.Location = new System.Drawing.Point(12, 253);
+            this.cbSelect.Items.AddRange(new object[] {
+            "Sehir",
+            "Kisi",
+            "Ilce"});
+            this.cbSelect.Location = new System.Drawing.Point(6, 18);
             this.cbSelect.Name = "cbSelect";
             this.cbSelect.Size = new System.Drawing.Size(152, 21);
             this.cbSelect.TabIndex = 7;
@@ -95,7 +99,7 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(170, 251);
+            this.exportButton.Location = new System.Drawing.Point(164, 16);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(113, 23);
             this.exportButton.TabIndex = 8;
@@ -105,12 +109,15 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.groupBox1.Controls.Add(this.getButton);
             this.groupBox1.Controls.Add(this.insertButton);
+            this.groupBox1.Controls.Add(this.exportButton);
             this.groupBox1.Controls.Add(this.updateButton);
-            this.groupBox1.Location = new System.Drawing.Point(12, 280);
+            this.groupBox1.Controls.Add(this.cbSelect);
+            this.groupBox1.Location = new System.Drawing.Point(12, 253);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(347, 58);
+            this.groupBox1.Size = new System.Drawing.Size(360, 106);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Operation";
@@ -132,10 +139,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 338);
+            this.BackColor = System.Drawing.Color.NavajoWhite;
+            this.ClientSize = new System.Drawing.Size(675, 371);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.exportButton);
-            this.Controls.Add(this.cbSelect);
             this.Controls.Add(this.dataGridView);
             this.Name = "Form1";
             this.Text = "Form1";

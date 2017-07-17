@@ -92,9 +92,6 @@ namespace nTierApplicationExample
 
         private void Form1_Load (object sender, EventArgs e)
         {
-            cbSelect.Items.Add("Sehir");
-            cbSelect.Items.Add("Kisi");
-            cbSelect.Items.Add("Ilce");
             this.Controls.Add(sehirControl);
             this.Controls.Add(kisiControl);
             this.Controls.Add(ilceControl);
