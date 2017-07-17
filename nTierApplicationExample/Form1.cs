@@ -33,6 +33,13 @@ namespace nTierApplicationExample
             InitializeComponent();
         }
 
+        enum ActiveSheet {
+            Kisi,
+            Sehir,
+            Ilce
+        }
+
+        ActiveSheet activeSheet;
         //Select
         private void button1_Click (object sender, EventArgs e)
         {
@@ -116,6 +123,13 @@ namespace nTierApplicationExample
             } catch {
                 MessageBox.Show("An error occured.");
             }
+            
+            if (cbSelect.SelectedItem == "Kisi") 
+                activeSheet = ActiveSheet.Kisi;
+            else if (cbSelect.SelectedItem == "Sehir") 
+                activeSheet = ActiveSheet.Sehir;
+            else if (cbSelect.SelectedItem == "Ilce")
+                activeSheet = ActiveSheet.Ilce;
         }
 
         //To export Data to Excel file.
@@ -127,31 +141,16 @@ namespace nTierApplicationExample
         //UPDATE the Excel file
         private void updateFile() {
             Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-            Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
-            Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
-            Excel.Range xlRange = xlWorksheet.UsedRange;
+            Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;  //Sets active workbook
+            Excel.Worksheet xlActiveSheet = (Excel.Worksheet) xlApplication.Worksheets[getActiveSheet(activeSheet)];    //Get sheet from excel but it's not active yet
+            xlActiveSheet.Select(Type.Missing); //Activate the sheet (opens that sheet in Excel file)
+            Excel.Range xlRange = xlActiveSheet.UsedRange;  //Set the range using active sheet
 
             for (int i = 0; i < dataGridView.Rows.Count; i++) {
                 for (int j = 0; j < dataGridView.Columns.Count; j++) {
-                    xlWorksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
+                    xlActiveSheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
                 }
             }
-        }
-
-        #region Deletion
-        //DELETE by right click on row header. (not working properly)
-        private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
-            //if (e.Button == MouseButtons.Right) {
-            //    dataGridView.MultiSelect = false;
-            //    var hitTest = dataGridView.HitTest(e.X, e.Y);   //Location of mouse hit on datagridview
-            //    dataGridView.ClearSelection();
-            //    dataGridView.Rows[hitTest.RowIndex].Selected = true;    //Select the row which equals to hitTest's row index
-            //    ContextMenu menu = new ContextMenu();
-            //    MenuItem deleteMenuItem = new MenuItem("Delete");
-            //    deleteMenuItem.Click += DeleteMenuItem_Click;   //Generate a Click event for deleteMenuItem MenuItem
-            //    menu.MenuItems.Add(deleteMenuItem);
-            //    menu.Show(dataGridView, new Point(e.X, e.Y));
-            //}
         }
 
         //DELETE in Excel file
@@ -161,9 +160,9 @@ namespace nTierApplicationExample
                 dataGridView.Rows.RemoveAt(deleteRow);
                 Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
                 Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
-                Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
-                Excel.Range xlRange = xlWorksheet.UsedRange;
-                ((Excel.Range) xlWorksheet.Rows[deleteRow + 2]).Delete(Type.Missing);
+                Excel.Worksheet xlActiveSheet = (Excel.Worksheet) xlApplication.Worksheets[getActiveSheet(activeSheet)];
+                xlActiveSheet.Select(Type.Missing);
+                ((Excel.Range) xlActiveSheet.Rows[deleteRow + 2]).Delete(Type.Missing);
                 updateFile();
             } catch {
                 MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -189,13 +188,17 @@ namespace nTierApplicationExample
                 } catch (Exception exception) {
                     MessageBox.Show(exception.ToString());
                 }
-
-            }
+            } else dataGridView.BeginEdit(true);
         }
-        #endregion
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-            dataGridView.BeginEdit(true);
+        }
+
+        private int getActiveSheet(ActiveSheet e) {
+            if (e == ActiveSheet.Kisi) return 1;
+            else if (e == ActiveSheet.Sehir) return 2;
+            else if (e == ActiveSheet.Ilce) return 3;
+            else return 0;
         }
     }
 }
