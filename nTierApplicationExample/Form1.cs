@@ -124,6 +124,11 @@ namespace nTierApplicationExample
         //To export Data to Excel file.
         private void button5_Click (object sender, EventArgs e)
         {
+            updateFile();
+        }
+
+        //UPDATE the Excel file
+        private void updateFile() {
             Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
             Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
             Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
@@ -137,19 +142,19 @@ namespace nTierApplicationExample
         }
 
         #region Deletion
-        //DELETE achieved by right click on row header.
+        //DELETE by right click on row header. (not working properly)
         private void dataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                dataGridView.MultiSelect = false;
-                var hitTest = dataGridView.HitTest(e.X, e.Y);
-                dataGridView.ClearSelection();
-                dataGridView.Rows[hitTest.RowIndex].Selected = true;
-                ContextMenu menu = new ContextMenu();
-                MenuItem deleteMenuItem = new MenuItem("Delete");
-                deleteMenuItem.Click += DeleteMenuItem_Click;
-                menu.MenuItems.Add(deleteMenuItem);
-                menu.Show(dataGridView, new Point(e.X, e.Y));
-            }
+            //if (e.Button == MouseButtons.Right) {
+            //    dataGridView.MultiSelect = false;
+            //    var hitTest = dataGridView.HitTest(e.X, e.Y);   //Location of mouse hit on datagridview
+            //    dataGridView.ClearSelection();
+            //    dataGridView.Rows[hitTest.RowIndex].Selected = true;    //Select the row which equals to hitTest's row index
+            //    ContextMenu menu = new ContextMenu();
+            //    MenuItem deleteMenuItem = new MenuItem("Delete");
+            //    deleteMenuItem.Click += DeleteMenuItem_Click;   //Generate a Click event for deleteMenuItem MenuItem
+            //    menu.MenuItems.Add(deleteMenuItem);
+            //    menu.Show(dataGridView, new Point(e.X, e.Y));
+            //}
         }
 
         //DELETE in Excel file
@@ -162,27 +167,38 @@ namespace nTierApplicationExample
                 Excel.Worksheet xlWorksheet = (Excel.Worksheet) xlWorkbook.ActiveSheet;
                 Excel.Range xlRange = xlWorksheet.UsedRange;
                 ((Excel.Range) xlWorksheet.Rows[deleteRow + 2]).Delete(Type.Missing);
+                updateFile();
             } catch {
                 MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
 
         //DELETE operation by right click on any point in grid.
         private void dataGridView_MouseClick(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Right) {
-                dataGridView.MultiSelect = false;
-                var hitTest = dataGridView.HitTest(e.X, e.Y);
-                dataGridView.ClearSelection();
-                dataGridView.Rows[hitTest.RowIndex].Selected = true;
-                //dataGridView[hitTest.ColumnIndex, hitTest.RowIndex].Selected = true;
-                ContextMenu menu = new ContextMenu();
-                MenuItem deleteMenuItem = new MenuItem("Delete");
-                deleteMenuItem.Click += DeleteMenuItem_Click;
-                menu.MenuItems.Add(deleteMenuItem);
-                menu.Show(dataGridView, new Point(e.X, e.Y));
+                try {
+                    dataGridView.MultiSelect = false;
+                    var hitTest = dataGridView.HitTest(e.X, e.Y);   //Location of mouse hit on datagridview
+                    dataGridView.CancelEdit();      //Cancel any editing cells
+                    dataGridView.ClearSelection();  //Select no cell in grid
+                    dataGridView.Rows[hitTest.RowIndex].Selected = true;    //Select the row which equals to hitTest's row index
+                    ContextMenu menu = new ContextMenu();
+                    MenuItem deleteMenuItem = new MenuItem("Delete");
+                    deleteMenuItem.Click += DeleteMenuItem_Click;   //Generate a Click event for deleteMenuItem MenuItem
+                    menu.MenuItems.Add(deleteMenuItem);
+                    menu.Show(dataGridView, new Point(e.X, e.Y));
+                } catch (ArgumentOutOfRangeException exception) {
+
+                } catch (Exception exception) {
+                    MessageBox.Show(exception.ToString());
+                }
+
             }
         }
         #endregion
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+            dataGridView.BeginEdit(true);
+        }
     }
 }
