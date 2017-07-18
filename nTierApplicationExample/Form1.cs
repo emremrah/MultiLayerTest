@@ -37,18 +37,19 @@ namespace nTierApplicationExample
             InitializeComponent();
         }
 
+        //Detecting sheets
         enum ActiveSheet {
             Kisi,
             Sehir,
             Ilce
         }
-
         ActiveSheet activeSheet;
+
         //Select
         private void button1_Click (object sender, EventArgs e)
         {
             BLL bll = new BLL();
-            dataGridView.DataSource = bll.Get(cbSelect.SelectedItem.ToString());
+            dataGridView.DataSource = bll.Get(selectCombobox.SelectedItem.ToString());
         }
 
         //Insert
@@ -56,15 +57,15 @@ namespace nTierApplicationExample
         {
             try {
                 BLL BLL = new BLL();    //BLL Business Logic Layer
-                if (cbSelect.SelectedItem.ToString() == "Sehir") {
+                if (selectCombobox.SelectedItem.ToString() == "Sehir") {
                     Sehir newSehir = new Sehir(Convert.ToInt16(sehirControl.id.Text), sehirControl.ad.Text);
                     BLL.Insert<Sehir>(newSehir);
                     dataGridView.DataSource = BLL.Get("Sehir");
-                } else if (cbSelect.SelectedItem.ToString() == "Kisi") {
+                } else if (selectCombobox.SelectedItem.ToString() == "Kisi") {
                     Kisi newKisi = new Kisi(Convert.ToInt16(kisiControl.id.Text), kisiControl.ad.Text, kisiControl.soyad.Text, Convert.ToInt16(kisiControl.yas.Text), kisiControl.adres.Text, kisiControl.sehir.Text, kisiControl.ilce.Text);
                     BLL.Insert<Kisi>(newKisi);
                     dataGridView.DataSource = BLL.Get("Kisi");
-                } else if (cbSelect.SelectedItem.ToString() == "Ilce") {
+                } else if (selectCombobox.SelectedItem.ToString() == "Ilce") {
                     Ilce newIlce = new Ilce(Convert.ToInt16(ilceControl.id.Text), ilceControl.ad.Text, Convert.ToInt16(ilceControl.sehirId.Text));
                     BLL.Insert<Ilce>(newIlce);
                     dataGridView.DataSource = BLL.Get("Ilce");
@@ -78,19 +79,19 @@ namespace nTierApplicationExample
         private void button3_Click (object sender, EventArgs e)
         {
             try {
-                if (cbSelect.SelectedIndex == 0) {
+                if (selectCombobox.SelectedIndex == 0) {
                     BLL bll = new BLL();
                     Sehir newSehir = new Sehir(Convert.ToInt16(sehirControl.id.Text), sehirControl.ad.Text);
 
                     bll.Update<Sehir>(newSehir);
                     dataGridView.DataSource = bll.Get("Sehir");
-                } else if (cbSelect.SelectedItem.ToString() == "Kisi") {
+                } else if (selectCombobox.SelectedItem.ToString() == "Kisi") {
                     BLL bll = new BLL();
                     Kisi newKisi = new Kisi(Convert.ToInt16(kisiControl.id.Text), kisiControl.ad.Text, kisiControl.soyad.Text, Convert.ToInt16(kisiControl.yas.Text), kisiControl.adres.Text, kisiControl.sehir.Text, kisiControl.ilce.Text);
 
                     bll.Update<Kisi>(newKisi);
                     dataGridView.DataSource = bll.Get("Kisi");
-                } else if (cbSelect.SelectedItem.ToString() == "Ilce") {
+                } else if (selectCombobox.SelectedItem.ToString() == "Ilce") {
                     BLL bll = new BLL();
                     Ilce newIlce = new Ilce(Convert.ToInt16(ilceControl.id.Text), ilceControl.ad.Text, Convert.ToInt16(ilceControl.sehirId.Text));
                     bll.Update<Ilce>(newIlce);
@@ -106,33 +107,38 @@ namespace nTierApplicationExample
             this.Controls.Add(sehirControl);
             this.Controls.Add(kisiControl);
             this.Controls.Add(ilceControl);
+            //Hide all UserControls
             foreach (Control c in this.Controls)
                 if (c is UserControl) c.Visible = false;
-            cbSelect.SelectedIndex = 0;
+            selectCombobox.SelectedIndex = 0;
         }
 
-        //Combobox selection and filling the DataGridView
+        //Combobox selection and filling the Grid
         private void comboBox1_SelectedValueChanged (object sender, EventArgs e)
         {
+            //Show the selected UserControl and hide the others.
             foreach (Control u in this.Controls) {
-                if (u.Name == cbSelect.SelectedItem + "Control") {
+                if (u.Name == selectCombobox.SelectedItem + "Control") {
                     u.Visible = true;
                     u.Location = new Point(400, 0);
                     u.BringToFront();
                 } else if (u is UserControl) u.Visible = false;
             }
+
+            //Fill the grid with selected item
             try {
                 BLL bll = new BLL();
-                dataGridView.DataSource = bll.Get(cbSelect.SelectedItem.ToString());
+                dataGridView.DataSource = bll.Get(selectCombobox.SelectedItem.ToString());
             } catch {
                 MessageBox.Show("An error occured.");
             }
             
-            if (cbSelect.SelectedItem == "Kisi") 
+            //Determine active sheet
+            if (selectCombobox.SelectedItem.ToString() == "Kisi") 
                 activeSheet = ActiveSheet.Kisi;
-            else if (cbSelect.SelectedItem == "Sehir") 
+            else if (selectCombobox.SelectedItem.ToString() == "Sehir") 
                 activeSheet = ActiveSheet.Sehir;
-            else if (cbSelect.SelectedItem == "Ilce")
+            else if (selectCombobox.SelectedItem.ToString() == "Ilce")
                 activeSheet = ActiveSheet.Ilce;
         }
 
@@ -150,6 +156,7 @@ namespace nTierApplicationExample
             xlActiveSheet.Select(Type.Missing); //Activate the sheet (opens that sheet in Excel file)
             Excel.Range xlRange = xlActiveSheet.UsedRange;  //Set the range using active sheet
 
+            //Copy the table to Excel
             for (int i = 0; i < dataGridView.Rows.Count; i++) {
                 for (int j = 0; j < dataGridView.Columns.Count; j++) {
                     xlActiveSheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
@@ -166,7 +173,9 @@ namespace nTierApplicationExample
                 Excel.Workbook xlWorkbook = (Excel.Workbook) xlApplication.ActiveWorkbook;
                 Excel.Worksheet xlActiveSheet = (Excel.Worksheet) xlApplication.Worksheets[getActiveSheet(activeSheet)];
                 xlActiveSheet.Select(Type.Missing);
+
                 ((Excel.Range) xlActiveSheet.Rows[deleteRow + 2]).Delete(Type.Missing);
+                
                 updateFile();
             } catch {
                 MessageBox.Show("Could not update the Excel file. Make sure the file is open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -181,7 +190,9 @@ namespace nTierApplicationExample
                     var hitTest = dataGridView.HitTest(e.X, e.Y);   //Location of mouse hit on datagridview
                     dataGridView.CancelEdit();      //Cancel any editing cells
                     dataGridView.ClearSelection();  //Select no cell in grid
+
                     dataGridView.Rows[hitTest.RowIndex].Selected = true;    //Select the row which equals to hitTest's row index
+
                     ContextMenu menu = new ContextMenu();
                     MenuItem deleteMenuItem = new MenuItem("Delete");
                     deleteMenuItem.Click += DeleteMenuItem_Click;   //Generate a Click event for deleteMenuItem MenuItem
@@ -195,9 +206,7 @@ namespace nTierApplicationExample
             } else dataGridView.BeginEdit(true);
         }
 
-        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-        }
-
+        //Return active sheet
         private int getActiveSheet(ActiveSheet e) {
             if (e == ActiveSheet.Kisi) return 1;
             else if (e == ActiveSheet.Sehir) return 2;

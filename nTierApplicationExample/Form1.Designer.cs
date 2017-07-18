@@ -33,7 +33,7 @@
             this.getButton = new System.Windows.Forms.Button();
             this.insertButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
-            this.cbSelect = new System.Windows.Forms.ComboBox();
+            this.selectCombobox = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -50,7 +50,6 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(360, 235);
             this.dataGridView.TabIndex = 0;
-            this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellContentClick);
             this.dataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseClick);
             // 
             // getButton
@@ -83,18 +82,18 @@
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Click += new System.EventHandler(this.button3_Click);
             // 
-            // cbSelect
+            // selectCombobox
             // 
-            this.cbSelect.FormattingEnabled = true;
-            this.cbSelect.Items.AddRange(new object[] {
+            this.selectCombobox.FormattingEnabled = true;
+            this.selectCombobox.Items.AddRange(new object[] {
             "Sehir",
             "Kisi",
             "Ilce"});
-            this.cbSelect.Location = new System.Drawing.Point(6, 18);
-            this.cbSelect.Name = "cbSelect";
-            this.cbSelect.Size = new System.Drawing.Size(152, 21);
-            this.cbSelect.TabIndex = 7;
-            this.cbSelect.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedValueChanged);
+            this.selectCombobox.Location = new System.Drawing.Point(6, 18);
+            this.selectCombobox.Name = "selectCombobox";
+            this.selectCombobox.Size = new System.Drawing.Size(152, 21);
+            this.selectCombobox.TabIndex = 7;
+            this.selectCombobox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedValueChanged);
             // 
             // exportButton
             // 
@@ -113,7 +112,7 @@
             this.groupBox1.Controls.Add(this.insertButton);
             this.groupBox1.Controls.Add(this.exportButton);
             this.groupBox1.Controls.Add(this.updateButton);
-            this.groupBox1.Controls.Add(this.cbSelect);
+            this.groupBox1.Controls.Add(this.selectCombobox);
             this.groupBox1.Location = new System.Drawing.Point(12, 253);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 106);
@@ -158,7 +157,7 @@
         private System.Windows.Forms.Button insertButton;
         private System.Windows.Forms.Button updateButton;
         public System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.ComboBox cbSelect;
+        private System.Windows.Forms.ComboBox selectCombobox;
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
