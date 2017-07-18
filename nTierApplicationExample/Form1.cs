@@ -28,8 +28,12 @@ namespace nTierApplicationExample
         public Ilce newIlce;
         public IlceControl ilceControl = new IlceControl();
 
-        public Form1 ()
-        {
+        public Form1 () {
+            //Open the Excel file if it's exists.
+            FileInfo fileInfo = new FileInfo("kisi.xlsx");
+            if (fileInfo.Exists)
+                System.Diagnostics.Process.Start("kisi.xlsx");
+
             InitializeComponent();
         }
 
