@@ -143,8 +143,7 @@ namespace nTierApplicationExample
         }
 
         //To export Data to Excel file.
-        private void button5_Click (object sender, EventArgs e)
-        {
+        private void exportButton_Click(object sender, EventArgs e) {
             updateFile();
         }
 

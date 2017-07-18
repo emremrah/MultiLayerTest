@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent ()
         {
-            this.components = new System.ComponentModel.Container();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.getButton = new System.Windows.Forms.Button();
             this.insertButton = new System.Windows.Forms.Button();
@@ -36,11 +35,8 @@
             this.selectCombobox = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -101,9 +97,9 @@
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(113, 23);
             this.exportButton.TabIndex = 8;
-            this.exportButton.Text = "EXPORT-TO-FILE";
+            this.exportButton.Text = "UPDATE FILE";
             this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.button5_Click);
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
             // groupBox1
             // 
@@ -120,19 +116,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Operation";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteRowToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(131, 26);
-            // 
-            // deleteRowToolStripMenuItem
-            // 
-            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
-            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.deleteRowToolStripMenuItem.Text = "DeleteRow";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,7 +129,6 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -160,7 +142,5 @@
         private System.Windows.Forms.ComboBox selectCombobox;
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem deleteRowToolStripMenuItem;
     }
 }
