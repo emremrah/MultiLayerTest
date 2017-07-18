@@ -212,5 +212,11 @@ namespace nTierApplicationExample
             else if (e == ActiveSheet.Ilce) return 3;
             else return 0;
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            Excel.Application xlApplication = (Excel.Application) System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+            xlApplication.ActiveWorkbook.Save();
+            xlApplication.Quit();
+        }
     }
 }
